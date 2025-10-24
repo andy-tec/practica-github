@@ -1,0 +1,140 @@
+$black_color:#000;
+$white_color: #fff;
+$white1_color: rgb(227, 209, 227);
+$orange_color: #f85;
+$backgroung1:url(../img/background1.jpg);
+$backgroung2:url(../img/background2.jpg);
+%anchor-style{
+    color: $white_color;
+    text-decoration: none;
+}
+
+// ************************************************************************************************************
+
+@mixin flexBox($direction:row, $align:center, $justify:center, $gap:0, $wrap:nowrap){
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
+    gap: $gap;
+    flex-wrap: $wrap;
+}
+
+@mixin grid($alignC:none, $justifyC:none,$alignI:none, $justifyI:none, $gap:none, $gTC:none, $gTR:none, $columnG:none, $rowG:none){
+    display: grid;
+    align-content: $alignC;
+    align-items: $alignI;
+    justify-content: $justifyC;
+    justify-items: $justifyI;
+    grid-template-columns: $gTC;
+    grid-template-rows: $gTR;
+    column-gap: $columnG;
+    row-gap: $rowG;
+    gap:$gap;
+}
+
+@mixin block-style($marginT:0, $marginR:0, $marginB:0, $marginL:0, $paddingT:0, $paddingR:0,
+$paddingB:0, $paddingL:0,$width:auto, $bSizing: border-box){
+    margin: $marginT $marginR $marginB $marginL;
+    padding: $paddingT $paddingR $paddingB $paddingL;
+    width: $width;
+    box-sizing: $bSizing;
+}
+
+@mixin border-style($size:none, $style: solid, $color: $black_color, $radius:0.5rem){
+    border: $size $style $color;
+    border-radius: $radius;
+}
+
+@mixin text-style($size:none, $color:$white_color){
+    font-size: $size;
+    color: $color;
+}
+
+@mixin background($url: none, $color: $white_color, $position: none, $size: none){
+    background: $url;
+    background-color: $color;
+    background-position: $position;
+    background-size: $size;
+}
+
+// ************************************************************************************************************
+
+body {
+    @include flexBox($direction: column, $align: none);
+    header{
+        @include grid($gap:1.5rem, $gTR:6rem 1fr, $gTC: repeat(2,minmax(20rem,1fr)));
+        @include block-style($paddingT:0.5rem);
+        grid-template-areas: 
+        "icons titles"
+        "banner banner";
+        .header__icons{
+            @include flexBox($justify:flex-start,$gap:1rem);
+            grid-area: icons;
+            order: 2;
+            .header__icon{
+                @include block-style($width:5rem,$paddingL:1rem);
+            }
+        }
+        .header__grid{
+            grid-area: titles;
+            @include flexBox($align:center, $justify:flex-end, $gap:2rem);
+            @include block-style($paddingR:1rem);
+            order: 1;
+            .header__logo{
+                @include block-style($width:6rem);
+                @include border-style($size:0.25rem, $style: solid )
+            }
+            .header__title{
+                @include block-style($width:clamp(1rem, 100%, auto));
+                @include text-style($size:3rem, $color:$black_color);
+            }
+        }
+        .header__banner{
+            grid-area: banner;
+            box-sizing: border-box;
+            @include background($size: cover, $position: center right);
+            @include border-style($radius: 5px);
+            @include flexBox($justify: space-evenly, $align:center);
+            order: 3;
+            h2{
+                @include text-style($size: 1.5rem)
+            }
+        }  
+    }
+    main{
+        .products{
+            @include background($url: $backgroung2, $size:cover, $position: center center );
+            @include block-style($paddingT:2rem, $paddingB:2rem);
+            @include grid($gTC: repeat(auto-fill, minmax(21rem,1fr)),$justifyI:center,$gap:4rem);
+        }
+        .products__img{
+            width: 20rem;
+            height: 20rem;
+        }
+    }
+    footer{
+        @include flexBox($justify: space-evenly);
+        @include background($color: $black_color);
+        h3{
+            @include text-style($color: $white_color, $size: 2rem)
+        }
+        .footer__enlaces{
+            @include flexBox($gap:1.5rem);
+        }
+        .footer__enlace{
+            transition: color 1.5s ease;
+            font-size: 1.5rem;
+            &:link, &:active{
+                @extend %anchor-style
+            }
+            &:hover{
+                color: $orange_color;
+            }
+            &:visited{
+                @extend %anchor-style
+            }
+        }
+    }
+}
+
