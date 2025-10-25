@@ -186,8 +186,8 @@
 
 @media (prefers-color-scheme: dark){
     .body--dark{
-        background-color: #000;
-        color: #fff;
+        background-color: #222;
+        color: #ddd;
     }
 
     .header__logo--dark{
@@ -196,7 +196,7 @@
     }
     
     .header__icon--dark{
-        background-color: #fff;
-        border: .255rem #000 solid;
+        color: #ddd;
+        border: .35rem #222 solid;
     }
 }
